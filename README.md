@@ -1,0 +1,1 @@
+# floatmemo.nvim

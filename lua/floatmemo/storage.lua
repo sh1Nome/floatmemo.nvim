@@ -18,7 +18,7 @@ function M.read()
   end
   
   local lines = {}
-  for line in content:gmatch("[^\n]*") do
+  for line in (content .. "\n"):gmatch("([^\n]*)\n") do
     table.insert(lines, line)
   end
   

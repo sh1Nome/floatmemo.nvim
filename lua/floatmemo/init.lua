@@ -30,12 +30,18 @@ function M.open()
   local win_id = window.create(buf_id)
   state.set_window(win_id)
   
+  -- floatmemo 専用の autocommand グループを作成（重複登録を防ぐ）
+  vim.api.nvim_create_augroup("floatmemo", { clear = true })
+  
   -- ウィンドウが閉じられたら自動的にcloseを呼ぶ
-  local close_cmd = string.format(
-    "autocmd WinClosed <buffer=%d> lua require('floatmemo').close()",
-    buf_id
-  )
-  vim.cmd(close_cmd)
+  vim.api.nvim_create_autocmd("WinClosed", {
+    group = "floatmemo",
+    callback = function(args)
+      if tonumber(args.match) == win_id then
+        require("floatmemo").close()
+      end
+    end,
+  })
 end
 
 -- メモウィンドウを閉じてクリーンアップ

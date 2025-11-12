@@ -24,7 +24,6 @@ function M.create(buf_id, lines)
     height = height,
     col = col,
     row = row,
-    style = "minimal",
     border = config.get("border"),
   })
   

@@ -26,7 +26,7 @@ end
 -- ウィンドウが現在開いているかどうかを確認
 function M.is_open()
   local win_id = state.window_id
-  return win_id and vim.api.nvim_win_is_valid(win_id) or false
+  return (win_id and vim.api.nvim_win_is_valid(win_id)) or false
 end
 
 -- 状態をリセット（ウィンドウ閉じる時に呼ぶ）

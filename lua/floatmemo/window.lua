@@ -27,6 +27,9 @@ function M.create(buf_id, lines)
     border = config.get("border"),
   })
   
+  -- ウィンドウの背景色をNeovimの背景色に統一
+  vim.api.nvim_set_option_value("winhighlight", "Normal:Normal,FloatBorder:Normal", { win = win_id })
+  
   return win_id
 end
 

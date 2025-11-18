@@ -1,0 +1,65 @@
+*floatmemo.txt*    Floating window memo plugin for Neovim
+
+==============================================================================
+CONTENTS                                                  *floatmemo-contents*
+
+    1. Introduction ........................ |floatmemo-introduction|
+    2. Commands ............................ |floatmemo-commands|
+    3. Configuration ....................... |floatmemo-configuration|
+    4. License ............................. |floatmemo-license|
+
+==============================================================================
+1. INTRODUCTION                                       *floatmemo-introduction*
+
+floatmemo.nvim is a Neovim plugin to manage notes in a floating window.
+Keep your memo in one place across all projects.
+
+Features:
+- Simple floating window for taking notes
+- Auto-save to a single memo file
+- Consistent memo file location across projects
+- Customizable window size and appearance
+
+==============================================================================
+2. COMMANDS                                               *floatmemo-commands*
+
+                                                         *:FloatmemoOpen*
+:FloatmemoOpen          Open the floating memo window
+
+                                                        *:FloatmemoClose*
+:FloatmemoClose         Close the floating memo window
+
+                                                       *:FloatmemoToggle*
+:FloatmemoToggle        Toggle the floating memo window
+
+==============================================================================
+3. CONFIGURATION                                     *floatmemo-configuration*
+
+Setup function:                                      *floatmemo.setup()*
+>
+    require('floatmemo').setup({
+        memo_path = nil,        -- Path to memo file (default: plugin root + /memo.txt)
+        width = 80,             -- Window width as percentage (0 < value <= 100)
+        height = 80,            -- Window height as percentage (0 < value <= 100)
+        save_on_close = true,   -- Save on close (true: save, false: discard changes)
+        border = "rounded",     -- Border style ("single", "double", "shadow", "rounded", etc.)
+    })
+<
+
+Example with key mapping:
+>
+    require('floatmemo').setup({
+        width = 90,
+        height = 85,
+    })
+    
+    vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>', { noremap = true })
+<
+
+==============================================================================
+4. LICENSE                                               *floatmemo-license*
+
+MIT License
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

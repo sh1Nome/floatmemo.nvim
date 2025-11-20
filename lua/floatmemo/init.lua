@@ -3,6 +3,7 @@ local config = require("floatmemo.config")
 local state = require("floatmemo.state")
 local storage = require("floatmemo.storage")
 local window = require("floatmemo.window")
+local handlers = require("floatmemo.handlers")
 
 -- メモをフロートウィンドウで開く
 function M.open()
@@ -37,10 +38,14 @@ function M.open()
   vim.api.nvim_create_autocmd("WinClosed", {
     group = "floatmemo",
     callback = function(args)
-      if tonumber(args.match) == win_id then
-        require("floatmemo").close()
-      end
+      handlers.on_win_closed(win_id, args)
     end,
+  })
+
+  -- バッファの移動があればメモバッファにフォーカスを戻す
+  vim.api.nvim_create_autocmd("BufEnter", {
+    group = "floatmemo",
+    callback = handlers.on_buf_enter,
   })
 end
 
@@ -62,6 +67,11 @@ function M.close()
   
   if buf_id and vim.api.nvim_buf_is_valid(buf_id) then
     vim.api.nvim_buf_delete(buf_id, { force = true })
+  end
+  
+  -- autocmdグループを削除
+  if vim.fn.exists("augroup floatmemo") == 1 then
+    vim.api.nvim_del_augroup_by_name("floatmemo")
   end
   
   state.clear()

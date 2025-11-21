@@ -47,6 +47,12 @@ function M.open()
     group = "floatmemo",
     callback = handlers.on_buf_enter,
   })
+
+  -- 端末がリサイズされたときにフロートウィンドウをリサイズ
+  vim.api.nvim_create_autocmd("VimResized", {
+    group = "floatmemo",
+    callback = handlers.on_vim_resized,
+  })
 end
 
 -- メモウィンドウを閉じてクリーンアップ

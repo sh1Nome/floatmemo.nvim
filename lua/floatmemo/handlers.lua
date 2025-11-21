@@ -32,4 +32,15 @@ function M.on_win_closed(win_id, args)
   end
 end
 
+-- VimResizedイベントハンドラー：端末リサイズ時にフロートウィンドウをリサイズ
+function M.on_vim_resized()
+  local win_id = state.get_window()
+  
+  if not win_id or not vim.api.nvim_win_is_valid(win_id) then
+    return
+  end
+  
+  require("floatmemo.window").resize(win_id)
+end
+
 return M

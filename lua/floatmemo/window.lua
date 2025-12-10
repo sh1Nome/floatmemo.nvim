@@ -5,6 +5,7 @@ local config = require("floatmemo.config")
 local function calculate_geometry()
   local width_percent = config.get("width")
   local height_percent = config.get("height")
+  local border = config.get("border")
   
   -- 現在のUI寸法を取得
   local ui = vim.api.nvim_list_uis()[1]
@@ -17,6 +18,12 @@ local function calculate_geometry()
   
   local col = math.floor((screen_width - width) / 2)
   local row = math.floor((screen_height - height) / 2)
+  
+  -- ボーダーがある場合は位置を調整
+  if border and border ~= "none" then
+    col = col - 1
+    row = row - 1
+  end
   
   return { width = width, height = height, col = col, row = row }
 end

@@ -1,7 +1,6 @@
 local M = {}
 local config = require("floatmemo.config")
 local state = require("floatmemo.state")
-local storage = require("floatmemo.storage")
 local window = require("floatmemo.window")
 local handlers = require("floatmemo.handlers")
 
@@ -13,18 +12,21 @@ function M.open()
   
   local buf_id = state.get_buffer()
   
-  -- バッファが無い、または無効な場合は新規作成
+  -- バッファが無い、または無効な場合はバッファを作成
   if not buf_id or not vim.api.nvim_buf_is_valid(buf_id) then
-    buf_id = vim.api.nvim_create_buf(false, true)
+    local memo_path = config.get("memo_path")
+    
+    -- メモファイルが存在しない場合は作成
+    if vim.fn.filereadable(memo_path) == 0 then
+      vim.fn.writefile({}, memo_path)
+    end
+    
+    -- bufnr()でバッファIDを取得（存在しなければ作成）
+    buf_id = vim.fn.bufnr(memo_path, true)
     state.set_buffer(buf_id)
     
-    -- バッファを非表示化（バッファリストから隠す）
-    vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf_id })
+    -- バッファをバッファリストから隠す
     vim.api.nvim_set_option_value("buflisted", false, { buf = buf_id })
-    
-    -- メモファイルから内容を読み込む
-    local lines = storage.read()
-    vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
   end
   
   -- ウィンドウを作成・表示
@@ -60,10 +62,16 @@ function M.close()
   local buf_id = state.get_buffer()
   local win_id = state.get_window()
   
-  -- save_on_closeが有効な場合は内容を保存
-  if config.get("save_on_close") and buf_id and vim.api.nvim_buf_is_valid(buf_id) then
-    local lines = vim.api.nvim_buf_get_lines(buf_id, 0, -1, false)
-    storage.write(lines)
+  if buf_id and vim.api.nvim_buf_is_valid(buf_id) then
+    -- save_on_closeが有効な場合は保存
+    if config.get("save_on_close") then
+      vim.api.nvim_buf_call(buf_id, function()
+        vim.cmd("write")
+      end)
+    else
+      -- save_on_closeが無効な場合は変更を破棄
+      vim.api.nvim_set_option_value("modified", false, { buf = buf_id })
+    end
   end
   
   -- ウィンドウとバッファを削除

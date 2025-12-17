@@ -2,6 +2,7 @@ local M = {}
 
 local defaults = {
   memo_path = nil,
+  extension = "txt",
   width = 80,
   height = 80,
   save_on_close = true,
@@ -26,8 +27,8 @@ function M.setup(opts)
     -- script_dirから /lua/floatmemo/ より前の部分を抽出
     -- match("(.*)/lua")でluaフォルダより前のプラグインルートを取得
     -- 結果: /home/user/.local/share/nvim/site/pack/packer/start/floatmemo.nvim
-    -- その後 /memo.txt を末尾に追加してmemo_pathを確定
-    config.memo_path = script_dir:match("(.*)/lua") .. "/memo.txt"
+    -- その後 /memo.{extension} を末尾に追加してmemo_pathを確定
+    config.memo_path = script_dir:match("(.*)/lua") .. "/memo." .. config.extension
   end
   
   return config

@@ -26,7 +26,10 @@ Use your favorite package manager.
 
 ```lua
 require('floatmemo').setup({
-  -- Path to memo file (default: plugin root + /memo.txt)
+  -- File extension (default: "txt", ignored if memo_path is set)
+  extension = "txt",
+  
+  -- Path to memo file (default: plugin root + /memo.{extension}, overrides extension)
   memo_path = nil,
   
   -- Window width as percentage (0 < value <= 100)
@@ -46,6 +49,7 @@ require('floatmemo').setup({
 ## Example Setup
 
 ```lua
+-- Default (memo.txt)
 require('floatmemo').setup({
   width = 90,
   height = 85,

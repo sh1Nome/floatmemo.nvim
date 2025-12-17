@@ -27,12 +27,13 @@ Neovim のフロートウィンドウにメモを表示・編集するプラグ�
 
 #### 1.3 メモファイル
 - 1 つのテキストファイルのみを管理
-- ファイル名：`memo.txt`
+- ファイル名：`memo.{extension}`
 - ファイルパス：ユーザー設定で指定可能
   - デフォルト：プラグインインストール場所のルート + `/memo.txt`
+  - 拡張子はユーザー設定で変更可能（例：`memo.md`, `memo.sql`）
   - 例：`~/.local/share/nvim/site/pack/packer/start/floatmemo.nvim/memo.txt`
-- メモの内容は `memo.txt` に自動保存される
-- ウィンドウを再度開く際は、`memo.txt` から最新の内容を読み込む
+- メモの内容は自動保存される
+- ウィンドウを再度開く際は、メモファイルから最新の内容を読み込む
 
 #### 1.4 閉じるときの動作
 - `save_on_close`（デフォルト: true）
@@ -76,7 +77,10 @@ floatmemo.nvim/
 
 ```lua
 require('floatmemo').setup({
-  -- メモファイルのパス（デフォルト: プラグインルート/memo.txt）
+  -- ファイル拡張子（デフォルト: "txt"、memo_path指定時は無視される）
+  extension = "txt",  -- "md", "sql" など指定可能
+  
+  -- メモファイルのパス（デフォルト: プラグインルート/memo.{extension}、指定時は extension を上書き）
   memo_path = nil,  -- nil の場合は自動計算
   
   -- ウィンドウサイズ（0 < value <= 100 でパーセンテージ指定）

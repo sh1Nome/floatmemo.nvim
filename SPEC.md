@@ -61,7 +61,6 @@ floatmemo.nvim/
 │   ├── init.lua                 # メイン処理（open/close ロジック）
 │   ├── config.lua               # 設定管理
 │   ├── window.lua               # フロートウィンドウ操作
-│   ├── storage.lua              # ファイル読み書き
 │   └── state.lua                # 状態管理（ウィンドウID等）
 └── memo.txt                     # メモファイル（gitignore に追加）
 ```
@@ -124,9 +123,8 @@ require('floatmemo').setup({
 
 1. `config.lua` - 設定初期化・管理
 2. `state.lua` - ウィンドウ/バッファ ID 管理
-3. `storage.lua` - ファイル読み書き
-4. `window.lua` - フロートウィンドウ作成・表示
-5. `init.lua` - 全体の統合
-6. `plugin/floatmemo.lua` - コマンド定義、setup 関数公開
-7. `.gitignore` - `memo.txt` 追加
-8. `README.md` - 使用方法・インストール方法ドキュメント
+3. `window.lua` - フロートウィンドウ作成・表示
+4. `init.lua` - 全体の統合（バッファ操作・autocommand設定含む）
+5. `plugin/floatmemo.lua` - コマンド定義、setup 関数公開
+6. `.gitignore` - `memo.txt` 追加
+7. `README.md` - 使用方法・インストール方法ドキュメント

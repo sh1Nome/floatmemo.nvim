@@ -2,13 +2,13 @@ local floatmemo = require("floatmemo")
 
 -- コマンド定義
 vim.api.nvim_create_user_command("FloatmemoOpen", function()
-  floatmemo.open()
+	floatmemo.open()
 end, {})
 
 vim.api.nvim_create_user_command("FloatmemoClose", function()
-  floatmemo.close()
+	floatmemo.close()
 end, {})
 
 vim.api.nvim_create_user_command("FloatmemoToggle", function()
-  floatmemo.toggle()
+	floatmemo.toggle()
 end, {})

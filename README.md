@@ -1,7 +1,7 @@
 # floatmemo.nvim
 
 A Neovim plugin to manage notes in a floating window. Keep your memo in one place across all projects.  
-![demo.gif](./demo.gif)
+![demo.gif](./demo/demo.gif)
 
 ## Features
 

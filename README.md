@@ -57,5 +57,7 @@ require('floatmemo').setup({
 })
 
 -- Toggle memo with <leader>m
-vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>', { noremap = true })
+vim.keymap.set("n", "<leader>m", function()
+    require("floatmemo").toggle()
+end, { desc = "Toggle floatmemo" })
 ```

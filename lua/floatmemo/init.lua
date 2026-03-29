@@ -1,10 +1,62 @@
+--- *floatmemo*    Floating window memo plugin for Neovim
+---
+--- MIT License Copyright (c) 2025 sh1Nome
+---
+---@toc
+
+--- floatmemo.nvim is a Neovim plugin to manage notes in a floating window.
+--- Keep your memo in one place across all projects.
+---
+--- Features:
+--- - Simple floating window for taking notes
+--- - Auto-save to a single memo file
+--- - Consistent memo file location across projects
+--- - Customizable window size and appearance
+---@tag floatmemo-introduction
+---@toc_entry Introduction
+
+---                                                          *:FloatmemoOpen*
+--- :FloatmemoOpen          Open the floating memo window
+---
+---                                                         *:FloatmemoClose*
+--- :FloatmemoClose         Close the floating memo window
+---
+---                                                        *:FloatmemoToggle*
+--- :FloatmemoToggle        Toggle the floating memo window
+---@tag floatmemo-commands
+---@toc_entry Commands
+
 local M = {}
 local config = require("floatmemo.config")
 local state = require("floatmemo.state")
 local window = require("floatmemo.window")
 local handlers = require("floatmemo.handlers")
 
--- メモをフロートウィンドウで開く
+--- Initialize the floatmemo plugin with user configuration.
+---
+---@param opts table|nil Options. Possible fields:
+---   - <memo_path> `(string)` - Path to memo file. Default: plugin root + /memo.txt
+---   - <width> `(number)` - Window width as percentage (0 < value <= 100). Default: 80
+---   - <height> `(number)` - Window height as percentage (0 < value <= 100). Default: 80
+---   - <save_on_close> `(boolean)` - Save on close (true: save, false: discard changes). Default: true
+---   - <border> `(string)` - Border style ("single", "double", "shadow", "rounded", etc.). Default: "rounded"
+---
+---@usage
+--- require('floatmemo').setup({ width = 90, height = 85 })
+---
+--- -- Optional: Set up key mapping
+--- vim.keymap.set("n", "<leader>m", function()
+---     require("floatmemo").toggle()
+--- end, { desc = "Toggle floatmemo" })
+---@tag floatmemo-api-setup
+---@toc_entry setup()
+function M.setup(opts)
+	config.setup(opts)
+end
+
+--- Open the floating memo window.
+---@tag floatmemo-api-open
+---@toc_entry open()
 function M.open()
 	if state.is_open() then
 		return
@@ -57,7 +109,9 @@ function M.open()
 	})
 end
 
--- メモウィンドウを閉じてクリーンアップ
+--- Close the floating memo window and cleanup resources.
+---@tag floatmemo-api-close
+---@toc_entry close()
 function M.close()
 	local buf_id = state.get_buffer()
 	local win_id = state.get_window()
@@ -91,18 +145,15 @@ function M.close()
 	state.clear()
 end
 
--- メモウィンドウのトグル（開いてればClose、閉じてればOpen）
+--- Toggle the floating memo window open or closed.
+---@tag floatmemo-api-toggle
+---@toc_entry toggle()
 function M.toggle()
 	if state.is_open() then
 		M.close()
 	else
 		M.open()
 	end
-end
-
--- ユーザー設定でプラグインを初期化
-function M.setup(opts)
-	config.setup(opts)
 end
 
 return M

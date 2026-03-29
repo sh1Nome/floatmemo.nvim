@@ -1,16 +1,15 @@
-*floatmemo.txt*    Floating window memo plugin for Neovim
+*floatmemo*    Floating window memo plugin for Neovim
 
-==============================================================================
-CONTENTS                                                  *floatmemo-contents*
+MIT License Copyright (c) 2025 sh1Nome
 
-    1. Introduction ........................ |floatmemo-introduction|
-    2. Commands ............................ |floatmemo-commands|
-    3. Configuration ....................... |floatmemo-configuration|
-    4. License ............................. |floatmemo-license|
-
-==============================================================================
-1. INTRODUCTION                                       *floatmemo-introduction*
-
+  Introduction ...................................... |floatmemo-introduction|
+  Commands .............................................. |floatmemo-commands|
+  setup() .............................................. |floatmemo-api-setup|
+  open() ................................................ |floatmemo-api-open|
+  close() .............................................. |floatmemo-api-close|
+  toggle() ............................................ |floatmemo-api-toggle|
+------------------------------------------------------------------------------
+                                                        *floatmemo-introduction*
 floatmemo.nvim is a Neovim plugin to manage notes in a floating window.
 Keep your memo in one place across all projects.
 
@@ -20,9 +19,8 @@ Features:
 - Consistent memo file location across projects
 - Customizable window size and appearance
 
-==============================================================================
-2. COMMANDS                                               *floatmemo-commands*
-
+------------------------------------------------------------------------------
+                                                            *floatmemo-commands*
                                                          *:FloatmemoOpen*
 :FloatmemoOpen          Open the floating memo window
 
@@ -32,36 +30,42 @@ Features:
                                                        *:FloatmemoToggle*
 :FloatmemoToggle        Toggle the floating memo window
 
-==============================================================================
-3. CONFIGURATION                                     *floatmemo-configuration*
+------------------------------------------------------------------------------
+                                                           *floatmemo-api-setup*
+                               `M.setup`({opts})
+Initialize the floatmemo plugin with user configuration.
 
-Setup function:                                      *floatmemo.setup()*
->
-    require('floatmemo').setup({
-        memo_path = nil,        -- Path to memo file (default: plugin root + /memo.txt)
-        width = 80,             -- Window width as percentage (0 < value <= 100)
-        height = 80,            -- Window height as percentage (0 < value <= 100)
-        save_on_close = true,   -- Save on close (true: save, false: discard changes)
-        border = "rounded",     -- Border style ("single", "double", "shadow", "rounded", etc.)
-    })
-<
+Parameters ~
+{opts} `(table|nil)` Options. Possible fields:
+  - <memo_path> `(string)` - Path to memo file. Default: plugin root + /memo.txt
+  - <width> `(number)` - Window width as percentage (0 < value <= 100). Default: 80
+  - <height> `(number)` - Window height as percentage (0 < value <= 100). Default: 80
+  - <save_on_close> `(boolean)` - Save on close (true: save, false: discard changes). Default: true
+  - <border> `(string)` - Border style ("single", "double", "shadow", "rounded", etc.). Default: "rounded"
 
-Example with key mapping:
->
-    require('floatmemo').setup({
-        width = 90,
-        height = 85,
-    })
-    
-    vim.keymap.set("n", "<leader>m", function()
-        require("floatmemo").toggle()
-    end, { desc = "Toggle floatmemo" })
-<
+Usage ~
 
-==============================================================================
-4. LICENSE                                               *floatmemo-license*
+require('floatmemo').setup({ width = 90, height = 85 })
 
-MIT License
+-- Optional: Set up key mapping
+vim.keymap.set("n", "<leader>m", function()
+    require("floatmemo").toggle()
+end, { desc = "Toggle floatmemo" })
 
-==============================================================================
-vim:tw=78:ts=8:ft=help:norl:
+------------------------------------------------------------------------------
+                                                            *floatmemo-api-open*
+                                   `M.open`()
+Open the floating memo window.
+
+------------------------------------------------------------------------------
+                                                           *floatmemo-api-close*
+                                  `M.close`()
+Close the floating memo window and cleanup resources.
+
+------------------------------------------------------------------------------
+                                                          *floatmemo-api-toggle*
+                                  `M.toggle`()
+Toggle the floating memo window open or closed.
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:

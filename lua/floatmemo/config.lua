@@ -5,6 +5,8 @@ local defaults = {
 	extension = "txt",
 	width = 80,
 	height = 80,
+	row = nil,
+	col = nil,
 	save_on_close = true,
 	border = "rounded",
 }

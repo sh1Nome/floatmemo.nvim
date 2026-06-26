@@ -38,6 +38,8 @@ local handlers = require("floatmemo.handlers")
 ---   - <memo_path> `(string)` - Path to memo file. Default: plugin root + /memo.txt
 ---   - <width> `(number)` - Window width as percentage (0 < value <= 100). Default: 80
 ---   - <height> `(number)` - Window height as percentage (0 < value <= 100). Default: 80
+---   - <row> `(number|nil)` - Top edge position as percentage of screen height (0 <= value <= 100). Default: nil (centered)
+---   - <col> `(number|nil)` - Left edge position as percentage of screen width (0 <= value <= 100). Default: nil (centered)
 ---   - <save_on_close> `(boolean)` - Save on close (true: save, false: discard changes). Default: true
 ---   - <border> `(string)` - Border style ("single", "double", "shadow", "rounded", etc.). Default: "rounded"
 ---
